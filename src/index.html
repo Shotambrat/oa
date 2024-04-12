@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/dist/css/input.css" />
+    <style>
+      .card {
+        display: none; /* Скрыть все карточки по умолчанию */
+        transition: opacity 0.5s ease-in-out;
+      }
+      .card.active {
+        display: block; /* Показать только активную карточку */
+        opacity: 1;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div
+      id="modal"
+      class="modal hidden justify-center items-center h-screen w-screen fixed top-0 left-0 bg-black backdrop-blur-sm bg-opacity-30"
+    >
+      <div
+        id="close__button"
+        class="absolute top-8 right-4 md:relative md:-top-[150px] md:left-[515px] backdrop-blur-md w-[32px] h-[32px] rounded-full flex justify-center items-center"
+      >
+        <button>
+          <svg
+            width="35px"
+            height="35px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.00386 9.41816C7.61333 9.02763 7.61334 8.39447 8.00386 8.00395C8.39438 7.61342 9.02755 7.61342 9.41807 8.00395L12.0057 10.5916L14.5907 8.00657C14.9813 7.61605 15.6144 7.61605 16.0049 8.00657C16.3955 8.3971 16.3955 9.03026 16.0049 9.42079L13.4199 12.0058L16.0039 14.5897C16.3944 14.9803 16.3944 15.6134 16.0039 16.0039C15.6133 16.3945 14.9802 16.3945 14.5896 16.0039L12.0057 13.42L9.42097 16.0048C9.03045 16.3953 8.39728 16.3953 8.00676 16.0048C7.61624 15.6142 7.61624 14.9811 8.00676 14.5905L10.5915 12.0058L8.00386 9.41816Z"
+              fill="black"
+            />
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM3.00683 12C3.00683 16.9668 7.03321 20.9932 12 20.9932C16.9668 20.9932 20.9932 16.9668 20.9932 12C20.9932 7.03321 16.9668 3.00683 12 3.00683C7.03321 3.00683 3.00683 7.03321 3.00683 12Z"
+              fill="#000000"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="h-[200px] md:h-[300px] w-[250px] md:w-[500px] shadow-lg rounded-lg overflow-hidden"
+      >
+        <form
+          onsubmit="event.preventDefault(); submitForm();"
+          method="post"
+          class="h-full w-full flex flex-col justify-between p-4 bg-white"
+        >
+          <input
+            type="text"
+            placeholder="Ismingiz"
+            class="h-1/4 w-full pl-8 pr-4 py-2 border-2 border-gray-200 focus:border-green-700 focus:outline-none"
+          />
+          <div class="relative flex items-center w-full h-1/4">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+            >
+              <!-- class="w-5 h-5" -->
+
+              <svg
+                width="20px"
+                height="20px"
+                viewBox="0 -4 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_503_3720)">
+                  <rect
+                    x="0.25"
+                    y="0.25"
+                    width="27.5"
+                    height="19.5"
+                    rx="1.75"
+                    fill="white"
+                    stroke="#F5F5F5"
+                    stroke-width="0.5"
+                  />
+                  <mask
+                    id="mask0_503_3720"
+                    style="mask-type: alpha"
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="28"
+                    height="20"
+                  >
+                    <rect
+                      x="0.25"
+                      y="0.25"
+                      width="27.5"
+                      height="19.5"
+                      rx="1.75"
+                      fill="white"
+                      stroke="white"
+                      stroke-width="0.5"
+                    />
+                  </mask>
+                  <g mask="url(#mask0_503_3720)">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0 6.66667H28V0H0V6.66667Z"
+                      fill="#04AAC8"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0 20H28V13.3333H0V20Z"
+                      fill="#23C840"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M4.66669 5.33333C5.07797 5.33333 5.46025 5.20919 5.77811 4.99633C5.74128 4.99876 5.70413 4.99999 5.66669 4.99999C4.74621 4.99999 4.00002 4.2538 4.00002 3.33333C4.00002 2.41285 4.74621 1.66666 5.66669 1.66666C5.70413 1.66666 5.74128 1.6679 5.77811 1.67033C5.46025 1.45747 5.07797 1.33333 4.66669 1.33333C3.56212 1.33333 2.66669 2.22876 2.66669 3.33333C2.66669 4.4379 3.56212 5.33333 4.66669 5.33333ZM8.00002 4.66666C8.00002 5.03485 7.70154 5.33333 7.33335 5.33333C6.96516 5.33333 6.66669 5.03485 6.66669 4.66666C6.66669 4.29847 6.96516 3.99999 7.33335 3.99999C7.70154 3.99999 8.00002 4.29847 8.00002 4.66666ZM10 2.66666C10.3682 2.66666 10.6667 2.36818 10.6667 1.99999C10.6667 1.63181 10.3682 1.33333 10 1.33333C9.63183 1.33333 9.33335 1.63181 9.33335 1.99999C9.33335 2.36818 9.63183 2.66666 10 2.66666ZM13.3334 1.99999C13.3334 2.36818 13.0349 2.66666 12.6667 2.66666C12.2985 2.66666 12 2.36818 12 1.99999C12 1.63181 12.2985 1.33333 12.6667 1.33333C13.0349 1.33333 13.3334 1.63181 13.3334 1.99999ZM12.6667 5.33333C13.0349 5.33333 13.3334 5.03485 13.3334 4.66666C13.3334 4.29847 13.0349 3.99999 12.6667 3.99999C12.2985 3.99999 12 4.29847 12 4.66666C12 5.03485 12.2985 5.33333 12.6667 5.33333ZM10.6667 4.66666C10.6667 5.03485 10.3682 5.33333 10 5.33333C9.63183 5.33333 9.33335 5.03485 9.33335 4.66666C9.33335 4.29847 9.63183 3.99999 10 3.99999C10.3682 3.99999 10.6667 4.29847 10.6667 4.66666Z"
+                      fill="white"
+                    />
+                  </g>
+                </g>
+                <defs>
+                  <clipPath id="clip0_503_3720">
+                    <rect width="28" height="20" rx="2" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <input
+              type="text"
+              placeholder="(99) 999-99-99"
+              class="pl-12 pr-4 py-2 h-full w-full border-2 border-gray-200 focus:outline-none focus:border-green-700"
+            />
+          </div>
+          <button
+            id="submitBtn"
+            type="submit"
+            class="h-1/4 w-full flex justify-center items-center hover:text-lg transition-all text-center text-white bg-mainColor hover:border-4 border-green-700"
+          >
+            Men bilan bog'lanish
+          </button>
+        </form>
+      </div>
+    </div>
+    <section id="main" class="md:h-screen w-full h-auto flex justify-center">
+      <div id="container-for-main" class="w-full h-full md:w-[80%]">
+        <header
+          class="flex h-[100px] w-full justify-between items-center md:justify-start"
+        >
+          <div id="logo" class="ml-4 md:ml-0">
+            <a href="./index.html">
+              <img
+                src="./images/logo-ao-oa.png"
+                class="md:h-[70px] h-[50px] w-[200px]"
+                alt="logo"
+              />
+            </a>
+          </div>
+          <div id="navbar" class="h-full w-full flex justify-between">
+            <nav class="h-full w-full md:mr-20">
+              <div class="w-full mx-auto px-4 h-full">
+                <div class="h-full w-full flex justify-between items-center">
+                  <div class="flex space-x-12 w-full">
+                    <!-- Primary Navbar items -->
+                    <div
+                      class="hidden md:flex justify-between w-full items-center text-lg"
+                    >
+                      <a
+                        href="/"
+                        class="py-4 px-2 text-gray-500 hover:text-black transition-all hover:border-b-4 hover:border-b-mainColor font-semibold whitespace-nowrap"
+                        >Men haqimda</a
+                      >
+                      <a
+                        href="#innova"
+                        class="py-4 px-2 text-gray-500 hover:text-black transition-all hover:border-b-4 hover:border-b-mainColor font-semibold"
+                        >Ixtisoslashuv</a
+                      >
+                      <a
+                        href="#services"
+                        class="py-4 px-2 text-gray-500 hover:text-black transition-all hover:border-b-4 hover:border-b-mainColor font-semibold"
+                        >Xizmatlar</a
+                      >
+                      <a
+                        href="#results"
+                        class="py-4 px-2 text-gray-500 hover:text-black transition-all hover:border-b-4 hover:border-b-mainColor font-semibold"
+                        >Yutuqlar</a
+                      >
+                      <a
+                        href="#articles"
+                        class="py-4 px-2 text-gray-500 hover:text-black transition-all hover:border-b-4 hover:border-b-mainColor font-semibold"
+                        >Blog</a
+                      >
+                      <a
+                        href="#footer-connect"
+                        class="py-4 px-2 text-gray-500 hover:text-black transition-all hover:border-b-4 hover:border-b-mainColor font-semibold"
+                        >Aloqa</a
+                      >
+                    </div>
+                  </div>
+                  <!-- Mobile menu button -->
+                  <div class="md:hidden flex items-center">
+                    <button class="outline-none mobile-menu-button">
+                      <svg
+                        class="w-6 h-6 text-mainColor hover:text-green-500"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      >
+                        <path d="M3 6h18M3 12h18M3 18h18"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- mobile menu -->
+              <sidebar
+                class="flex mobile-menu text-lg z-50 fixed top-0 left-0 h-screen w-[50%] mb-[100px] max-w-xs bg-white shadow-md overflow-y-auto transition-transform transform -translate-x-full"
+              >
+                <ul class="w-full">
+                  <li class="">
+                    <a
+                      href="/"
+                      class="block text-sm px-2 py-4 text-white bg-mainColor"
+                      >Men haqimda</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#innova"
+                      class="block text-sm px-2 py-4 hover:bg-mainColor hover:text-white hover:font-semibold transition duration-300"
+                      >Ixtisoslashuv</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#services"
+                      class="block text-sm px-2 py-4 hover:bg-mainColor transition duration-300 hover:text-white hover:font-semibold"
+                      >Xizmatlar</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#results"
+                      class="block text-sm px-2 py-4 hover:bg-mainColor transition duration-300 hover:text-white hover:font-semibold"
+                      >Yutuqlar</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#articles"
+                      class="block text-sm px-2 py-4 hover:bg-mainColor transition duration-300 hover:text-white hover:font-semibold"
+                      >Blog</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#footer-connect"
+                      class="block text-sm px-2 py-4 hover:bg-mainColor transition duration-300 hover:text-white hover:font-semibold"
+                      >Aloqa</a
+                    >
+                  </li>
+                </ul>
+              </sidebar>
+            </nav>
+            <div class="hidden md:flex justify-center items-end flex-col">
+              <a
+                href="tel:+998 97 462 80 88"
+                class="text-2xl hover:text-blue-700 hover:text-[26px] transition-all"
+                >+998(97) 462-80-88</a
+              >
+              <p class="whitespace-nowrap">
+                Respublika Ona va Bola Skrining Markazi
+              </p>
+            </div>
+          </div>
+        </header>
+        <main class="h-[calc(100%-100px)] w-full flex justify-center">
+          <div
+            class="h-full w-full md:w-[100%] flex flex-col justify-center items-center md:flex-row"
+          >
+            <div class="h-full w-full md:w-1/2 flex items-center">
+              <div
+                class="flex flex-col items-center justify-around md:items-start ml-0 md:ml-12"
+              >
+                <h2 class="font-medium text-2xl md:text-4xl mb-4 md:mb-12">
+                  Hujakulov Odil Alisherovich
+                </h2>
+                <p
+                  class="text-sm w-[90%] md:w-[300px] md:text-lg mb-6 md:text-start text-center"
+                >
+                  Prenatal ultratovush diagnostikasi sohasida 8 yillik tajribaga
+                  ega yetakchi mutaxassis
+                </p>
+                <button
+                  id="openModalButton"
+                  class="h-[40px] md:h-[60px] w-[200px] md:w-[350px] bg-mainColor hover:bg-teal-600 hover:border-2 hover:border-teal-300 text-white transition-all hover:shadow-lg"
+                >
+                  Maslahatga yozilish
+                </button>
+              </div>
+            </div>
+            <div class="h-full w-full md:w-1/2 flex items-center">
+              <img
+                class="h-full hidden md:flex"
+                src="./images/oa-main-bg.png"
+                alt="main-bg"
+              />
+              <img
+                class="w-full md:hidden"
+                src="./images/main-beck.png"
+                alt="main-back"
+              />
+            </div>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <section
+      id="innova"
+      class="bg-white h-auto w-full md:h-screen flex justify-center"
+    >
+      <div class="h-full w-full md:w-[80%] flex flex-col">
+        <div class="w-full flex justify-center items-center text-center">
+          <h2 class="text-2xl md:text-5xl font-semibold mt-8">Ixtisoslashuv</h2>
+        </div>
+        <div
+          class="grid grid-cols-2 md:grid-cols-3 md:gap-12 md:gap-y-24 gap-y-4 mt-12 mb-8 w-full"
+        >
+          <div class="flex items-center">
+            <img
+              src="./images/frame-circle.png"
+              class="ml-2 w-auto h-auto md:h-[70px]"
+              alt="innova-icon"
+            />
+            <p class="ml-2 md:text-xl text-xs">
+              Homiladorlikning 1 va 2 trimestrida ultratovush tekshiruvi
+            </p>
+          </div>
+          <div class="flex items-center">
+            <img
+              src="./images/frame-circle.png"
+              class="ml-2 w-auto h-auto md:h-[70px]"
+              alt="innova-icon"
+            />
+            <p class="ml-2 md:text-xl text-xs">
+              Xromosom patologiyasi markerlarini aniqlash va istisno qilish
+            </p>
+          </div>
+          <div class="flex items-center">
+            <img
+              src="./images/frame-circle.png"
+              class="ml-2 w-auto md:w-[90px] h-auto md:h-[70px]"
+              alt="innova-icon"
+            />
+            <p class="ml-2 md:text-xl text-xs">
+              Homiladorlikning 3 trimestrida dopplerometriya bilan ultratovush
+              tekshiruvi
+            </p>
+          </div>
+          <div class="flex items-center">
+            <img
+              src="./images/frame-circle.png"
+              class="ml-2 w-auto md:w-[55px] h-auto md:h-[70px]"
+              alt="innova-icon"
+            />
+            <p class="ml-2 md:text-xl text-xs">Homila ehokardiografiyasi</p>
+          </div>
+          <div class="flex items-center">
+            <img
+              src="./images/frame-circle.png"
+              class="ml-2 w-auto h-auto md:h-[70px]"
+              alt="innova-icon"
+            />
+            <p class="ml-2 md:text-xl text-xs">
+              Homila holati va parafetal organlarning diagnostikasi
+            </p>
+          </div>
+          <div class="flex items-center">
+            <img
+              src="./images/frame-circle.png"
+              class="ml-2 w-auto md:w-[55px] h-auto md:h-[70px]"
+              alt="innova-icon"
+            />
+            <p class="ml-2 md:text-xl text-xs">Homila neyrosonografiyasi</p>
+          </div>
+        </div>
+        <div
+          class="h-[400px] w-full md:h-full flex flex-col md:flex-row justify-center items-center bg-white"
+        >
+          <div
+            class="md:w-2/3 w-full h-[100%] flex justify-between items-center"
+          >
+            <div class="w-[85%] md:h-[65%] h-[85%] mx-2">
+              <img
+                class="w-full h-full bg-cover"
+                src="./images/image1.png"
+                alt=""
+              />
+            </div>
+            <div class="w-[85%] md:h-[65%] h-[85%] mx-2">
+              <img
+                class="w-full h-full bg-contain"
+                src="./images/image2.png"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="md:w-1/3 w-full h-[200%] md:h-full">
+            <div
+              class="w-[95%] md:w-full md:h-full mx-auto md:mx-2 md:flex md:items-center"
+            >
+              <img
+                class="w-full md:h-[65%] h-[85%] cover"
+                src="./images/image3.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="services"
+      class="h-auto w-full flex justify-center items-center"
+    >
+      <div class="flex md:w-[80%] w-full flex-col items-center justify-between">
+        <h1 class="my-8 text-3xl font-semibold">Xizmatlar</h1>
+        <div
+          class="w-full h-auto flex flex-col md:flex-row justify-between md:items-end mb-8"
+        >
+          <div
+            class="w-full md:w-1/3 md:h-[200px] md:mx-4 bg-white flex justify-between"
+          >
+            <div class="h-full w-full mt-4 ml-4">
+              <h3 class="mb-4 text-2xl md:text-xl font-semibold">
+                Homila skriningi
+              </h3>
+              <p class="md:text-sm text-xs">
+                Homilaninig rivojlanishini va salomatligini baholash uchun
+                kompleks diagnostika, genetik anomaliyalarning xavfini o'z
+                ichiga oladi
+              </p>
+            </div>
+            <img
+              class="relative right-4 md:right-0"
+              src="./images/brain.png"
+              alt=""
+            />
+          </div>
+          <div
+            class="w-full md:w-1/3 md:h-[200px] md:mx-4 bg-white flex justify-between mt-8"
+          >
+            <div class="h-full w-full mt-4 ml-4">
+              <h3 class="mb-4 text-2xl md:text-xl font-semibold">
+                Homila ehokardiografiyasi
+              </h3>
+              <p class="md:text-sm text-xs">
+                Homila yuragining tuzilishi va funksiyasini batafsil tahlil
+                qilish uchun maxsus ultratovush tekshiruvi
+              </p>
+            </div>
+            <img
+              class="relative right-2 md:right-0"
+              src="./images/hand-dick.png"
+              alt=""
+            />
+          </div>
+          <div
+            class="w-full md:w-1/3 md:h-[200px] md:mx-4 bg-white flex justify-between mt-8"
+          >
+            <div class="h-full w-full mt-4 ml-4">
+              <h3 class="mb-4 text-2xl md:text-xl font-semibold">
+                Homila dopplerografiyasi
+              </h3>
+              <p class="md:text-sm text-xs">
+                Homila va platsenta tomirlaridagi gemodinamikani va qon oqimini
+                baholash uchun doppler texnologiyasidan foydalanish
+              </p>
+            </div>
+            <img
+              class="relative right-4 md:right-0"
+              src="./images/half-life.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="maslahat"
+      class="md:flex hidden h-auto w-full justify-center items-center"
+    >
+      <div class="h-[400px] w-[80%] flex justify-center items-center">
+        <div
+          class="h-[300px] w-[300px] flex justify-center items-center rounded-full mr-16 bg-red-300"
+        >
+          <img
+            class="h-full w-full rounded-full"
+            src="./images/oa-avatar-2.png"
+            alt=""
+          />
+        </div>
+
+        <div class="h-[300px] w-auto justify-center flex flex-col">
+          <h3 class="font-semibold text-4xl w-[600px] relative -top-12">
+            Malakali diagnostika va doktor Odil Alisherovich bilan maslahatlar.
+          </h3>
+          <div class="flex flex-col">
+            <p class="text-lg font-medium mb-4">Hozir yozilish:</p>
+            <div>
+              <form
+                onsubmit="event.preventDefault(); submitForm();"
+                method="post"
+                class="h-full w-[700px] flex items-center justify-between bg-white"
+              >
+                <input
+                  type="text"
+                  placeholder="Ismingiz"
+                  class="h-[60px] w-[220px] mr-4 pl-8 pr-4 py-2 border-2 border-gray-200 bg-gray-200 focus:border-green-700 focus:outline-none"
+                />
+                <div class="relative flex items-center w-full">
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+                  >
+                    <!-- class="w-5 h-5" -->
+
+                    <svg
+                      width="20px"
+                      height="20px"
+                      viewBox="0 -4 28 28"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_503_3720)">
+                        <rect
+                          x="0.25"
+                          y="0.25"
+                          width="27.5"
+                          height="19.5"
+                          rx="1.75"
+                          fill="white"
+                          stroke="#F5F5F5"
+                          stroke-width="0.5"
+                        />
+                        <mask
+                          id="mask0_503_3720"
+                          style="mask-type: alpha"
+                          maskUnits="userSpaceOnUse"
+                          x="0"
+                          y="0"
+                          width="28"
+                          height="20"
+                        >
+                          <rect
+                            x="0.25"
+                            y="0.25"
+                            width="27.5"
+                            height="19.5"
+                            rx="1.75"
+                            fill="white"
+                            stroke="white"
+                            stroke-width="0.5"
+                          />
+                        </mask>
+                        <g mask="url(#mask0_503_3720)">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M0 6.66667H28V0H0V6.66667Z"
+                            fill="#04AAC8"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M0 20H28V13.3333H0V20Z"
+                            fill="#23C840"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M4.66669 5.33333C5.07797 5.33333 5.46025 5.20919 5.77811 4.99633C5.74128 4.99876 5.70413 4.99999 5.66669 4.99999C4.74621 4.99999 4.00002 4.2538 4.00002 3.33333C4.00002 2.41285 4.74621 1.66666 5.66669 1.66666C5.70413 1.66666 5.74128 1.6679 5.77811 1.67033C5.46025 1.45747 5.07797 1.33333 4.66669 1.33333C3.56212 1.33333 2.66669 2.22876 2.66669 3.33333C2.66669 4.4379 3.56212 5.33333 4.66669 5.33333ZM8.00002 4.66666C8.00002 5.03485 7.70154 5.33333 7.33335 5.33333C6.96516 5.33333 6.66669 5.03485 6.66669 4.66666C6.66669 4.29847 6.96516 3.99999 7.33335 3.99999C7.70154 3.99999 8.00002 4.29847 8.00002 4.66666ZM10 2.66666C10.3682 2.66666 10.6667 2.36818 10.6667 1.99999C10.6667 1.63181 10.3682 1.33333 10 1.33333C9.63183 1.33333 9.33335 1.63181 9.33335 1.99999C9.33335 2.36818 9.63183 2.66666 10 2.66666ZM13.3334 1.99999C13.3334 2.36818 13.0349 2.66666 12.6667 2.66666C12.2985 2.66666 12 2.36818 12 1.99999C12 1.63181 12.2985 1.33333 12.6667 1.33333C13.0349 1.33333 13.3334 1.63181 13.3334 1.99999ZM12.6667 5.33333C13.0349 5.33333 13.3334 5.03485 13.3334 4.66666C13.3334 4.29847 13.0349 3.99999 12.6667 3.99999C12.2985 3.99999 12 4.29847 12 4.66666C12 5.03485 12.2985 5.33333 12.6667 5.33333ZM10.6667 4.66666C10.6667 5.03485 10.3682 5.33333 10 5.33333C9.63183 5.33333 9.33335 5.03485 9.33335 4.66666C9.33335 4.29847 9.63183 3.99999 10 3.99999C10.3682 3.99999 10.6667 4.29847 10.6667 4.66666Z"
+                            fill="white"
+                          />
+                        </g>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_503_3720">
+                          <rect width="28" height="20" rx="2" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="(99) 999-99-99"
+                    class="pl-12 pr-4 py-2 h-[60px] w-[220px] border-2 border-gray-200 bg-gray-200 focus:outline-none focus:border-green-700"
+                  />
+                  <button
+                    id="submitBtn"
+                    type="submit"
+                    class="h-[60px] w-[220px] ml-4 flex justify-center items-center transition-all text-center text-white bg-mainColor hover:border-4 border-green-700"
+                  >
+                    Men bilan bog'lanish
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="articles" class="w-full h-[500px] bg-gray-300">
+      <h2 class="text-center mb-8 text-xl font-semibold">Yangi maqolalar</h2>
+      <div class="swiper mySwiper md:w-[1100px] w-[300px] h-[330px]">
+        <div class="swiper-wrapper relative">
+          <!-- Slides -->
+          <div
+            style="display: flex; justify-content: center; height: 100%"
+            class="swiper-slide flex justify-center bg-white"
+          >
+            <div class="bg-gray-300 border-2 border-gray-300">
+              <div class="bg-white flex flex-col justify-around">
+                <h2 class="mt-8 ml-8 text-xl font-semibold">Налоговый вычет</h2>
+                <hr
+                  class="relative md:-left-14 -left-10 border-t-[20px] w-[150px] mt-6 mx-auto"
+                />
+                <p class="mt-4 ml-8">
+                  Уважаемые пациенты, Вы можете оставить заявку на оформление
+                  справки для получения
+                </p>
+                <button
+                  class="h-[40px] pb-1 ml-8 mt-8 mb-8 w-[150px] bg-mainColor flex justify-center items-center"
+                >
+                  o'qish
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            style="display: flex; justify-content: center; height: 100%"
+            class="swiper-slide flex justify-center bg-white"
+          >
+            <div class="bg-white">
+              <div class="bg-red-300 flex flex-col justify-around">
+                <h2 class="mt-8 ml-8 text-xl font-semibold">Налоговый вычет</h2>
+                <hr
+                  class="relative md:-left-14 -left-10 border-t-[20px] w-[150px] mt-6 mx-auto"
+                />
+                <p class="mt-4 ml-8">
+                  Уважаемые пациенты, Вы можете оставить заявку на оформление
+                  справки для получения
+                </p>
+                <button
+                  class="h-[40px] pb-1 ml-8 mt-8 mb-8 w-[150px] bg-mainColor flex justify-center items-center"
+                >
+                  o'qish
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            style="display: flex; justify-content: center; height: 100%"
+            class="swiper-slide flex justify-center bg-white"
+          >
+            <div class="bg-white">
+              <div class="bg-red-300 flex flex-col justify-around">
+                <h2 class="mt-8 ml-8 text-xl font-semibold">Налоговый вычет</h2>
+                <hr
+                  class="relative md:-left-14 -left-10 border-t-[20px] w-[150px] mt-6 mx-auto"
+                />
+                <p class="mt-4 ml-8">
+                  Уважаемые пациенты, Вы можете оставить заявку на оформление
+                  справки для получения
+                </p>
+                <button
+                  class="h-[40px] pb-1 ml-8 mt-8 mb-8 w-[150px] bg-mainColor flex justify-center items-center"
+                >
+                  o'qish
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Если нужны стрелки -->
+        <!-- <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div> -->
+        <!-- Если нужны точки -->
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <section
+      id="results"
+      class="h-screen w-full flex justify-center items-center mb-12"
+    >
+      <div class="w-[320px] h-full md:w-[80%] flex flex-col items-center">
+        <div class="mt-6 mb-8 text-xl md:text-3xl font-semibold">
+          <h2>Yutuqlar</h2>
+        </div>
+        <div class="w-full flex items-center justify-center">
+          <div class="swiper mySecSwiper md:w-[1100px] w-[400px] h-[250px]">
+            <div class="swiper-wrapper relative">
+              <!-- Slides -->
+              <div
+                style="display: flex; justify-content: center; height: 100%"
+                class="swiper-slide flex justify-center bg-white"
+              >
+                <div class="bg-white">
+                  <div class="flex flex-col justify-around">
+                    <img src="./images/image3.png" alt="yutuqlar" />
+                  </div>
+                </div>
+              </div>
+              <div
+                style="display: flex; justify-content: center; height: 100%"
+                class="swiper-slide flex justify-center bg-white"
+              >
+                <div class="bg-white">
+                  <div class="flex flex-col justify-around">
+                    <img src="./images/image3.png" alt="yutuqlar" />
+                  </div>
+                </div>
+              </div>
+              <div
+                style="display: flex; justify-content: center; height: 100%"
+                class="swiper-slide flex justify-center bg-white"
+              >
+                <div class="bg-white">
+                  <div class="flex flex-col justify-around">
+                    <img src="./images/image3.png" alt="yutuqlar" />
+                  </div>
+                </div>
+              </div>
+              <div
+                style="display: flex; justify-content: center; height: 100%"
+                class="swiper-slide flex justify-center bg-white"
+              >
+                <div class="bg-white">
+                  <div class="flex flex-col justify-around">
+                    <img src="./images/image3.png" alt="yutuqlar" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Если нужны стрелки -->
+            <!-- <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div> -->
+            <!-- Если нужны точки -->
+            <div class="swiper-pagination-sec"></div>
+          </div>
+        </div>
+        <div class="mb-8 md:text-3xl text-xl font-semibold">
+          <h2>Bemorlar sharhlari</h2>
+        </div>
+        <div class="flex w-full h-screen bg-black text-white items-center justify-center">
+          <div class="relative flex justify-center items-center w-[1000px] h-[300px] overflow-hidden rounded-lg">
+            <div class="absolute top-12 left-24 text-8xl">“</div>
+            <div class="absolute bottom-12 right-24 text-8xl">”</div>
+            <!-- ” -->
+            <div class="card active w-[700px] text-center">Большая благодарность Одилу Алишеровичу, отличные услуги и прекрасный врач, рекомендую!</div>
+            <div class="card w-[700px] text-center">Большая благодарность Одилу Алишеровичу, о</div>
+            <div class="card w-[700px] text-center">Большая благодарность Одилу Алишеровичу, отличные услуги и прекрасный врач, рекомендую! ОВАТОАТ odnf IFUKHDJN KDUBFU KDJF вылаов аов а ваа</div>
+            <div class="card w-[700px] text-center">Большая благодарность Одилу Алишеровичу, отличные услуги и прекрасный врач, рекомендую!</div>
+            <div class="card w-[700px] text-center">Большая благодарность Одилу Алишеровичу, отличные услуги и прекрасный врач, рекомендую! 5</div>
+            <!-- Навигация -->
+            <div class="absolute inset-y-0 left-1 z-10 flex items-center cursor-pointer" onclick="navigateSlider('prev')">
+              <div class="w-8 h-8 bg-dodgerblue text-white rounded-full flex justify-center items-center">&lt;</div>
+            </div>
+            <div class="absolute inset-y-0 right-1 z-10 flex items-center cursor-pointer" onclick="navigateSlider('next')">
+              <div class="w-8 h-8 bg-dodgerblue text-white rounded-full flex justify-center items-center">&gt;</div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <section
+      id="connect"
+      class="w-full h-auto md:hidden flex justify-center pb-8 items-center bg-white"
+    >
+      <div class="w-[90%] h-[90%] flex flex-col items-center">
+        <h3 class="text-center text-xl font-semibold mb-4">
+          Malakali diagnostika va doktor Odil Alisherovich bilan maslahatlar.
+        </h3>
+        <div class="w-full">
+          <p class="text-md font-medium mb-4">Hozir yozilish:</p>
+          <form
+            onsubmit="event.preventDefault(); submitForm();"
+            method="post"
+            class="h-full w-full flex flex-col justify-between"
+          >
+            <input
+              type="text"
+              placeholder="Ismingiz"
+              class="h-[60px] w-full pl-8 pr-4 py-2 border-2 mb-4 bg-gray-200 border-gray-200 focus:border-green-700 focus:outline-none"
+            />
+            <div class="relative flex items-center w-full">
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+              >
+                <!-- class="w-5 h-5" -->
+
+                <svg
+                  width="20px"
+                  height="20px"
+                  viewBox="0 -4 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clip-path="url(#clip0_503_3720)">
+                    <rect
+                      x="0.25"
+                      y="0.25"
+                      width="27.5"
+                      height="19.5"
+                      rx="1.75"
+                      fill="white"
+                      stroke="#F5F5F5"
+                      stroke-width="0.5"
+                    />
+                    <mask
+                      id="mask0_503_3720"
+                      style="mask-type: alpha"
+                      maskUnits="userSpaceOnUse"
+                      x="0"
+                      y="0"
+                      width="28"
+                      height="20"
+                    >
+                      <rect
+                        x="0.25"
+                        y="0.25"
+                        width="27.5"
+                        height="19.5"
+                        rx="1.75"
+                        fill="white"
+                        stroke="white"
+                        stroke-width="0.5"
+                      />
+                    </mask>
+                    <g mask="url(#mask0_503_3720)">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M0 6.66667H28V0H0V6.66667Z"
+                        fill="#04AAC8"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M0 20H28V13.3333H0V20Z"
+                        fill="#23C840"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.66669 5.33333C5.07797 5.33333 5.46025 5.20919 5.77811 4.99633C5.74128 4.99876 5.70413 4.99999 5.66669 4.99999C4.74621 4.99999 4.00002 4.2538 4.00002 3.33333C4.00002 2.41285 4.74621 1.66666 5.66669 1.66666C5.70413 1.66666 5.74128 1.6679 5.77811 1.67033C5.46025 1.45747 5.07797 1.33333 4.66669 1.33333C3.56212 1.33333 2.66669 2.22876 2.66669 3.33333C2.66669 4.4379 3.56212 5.33333 4.66669 5.33333ZM8.00002 4.66666C8.00002 5.03485 7.70154 5.33333 7.33335 5.33333C6.96516 5.33333 6.66669 5.03485 6.66669 4.66666C6.66669 4.29847 6.96516 3.99999 7.33335 3.99999C7.70154 3.99999 8.00002 4.29847 8.00002 4.66666ZM10 2.66666C10.3682 2.66666 10.6667 2.36818 10.6667 1.99999C10.6667 1.63181 10.3682 1.33333 10 1.33333C9.63183 1.33333 9.33335 1.63181 9.33335 1.99999C9.33335 2.36818 9.63183 2.66666 10 2.66666ZM13.3334 1.99999C13.3334 2.36818 13.0349 2.66666 12.6667 2.66666C12.2985 2.66666 12 2.36818 12 1.99999C12 1.63181 12.2985 1.33333 12.6667 1.33333C13.0349 1.33333 13.3334 1.63181 13.3334 1.99999ZM12.6667 5.33333C13.0349 5.33333 13.3334 5.03485 13.3334 4.66666C13.3334 4.29847 13.0349 3.99999 12.6667 3.99999C12.2985 3.99999 12 4.29847 12 4.66666C12 5.03485 12.2985 5.33333 12.6667 5.33333ZM10.6667 4.66666C10.6667 5.03485 10.3682 5.33333 10 5.33333C9.63183 5.33333 9.33335 5.03485 9.33335 4.66666C9.33335 4.29847 9.63183 3.99999 10 3.99999C10.3682 3.99999 10.6667 4.29847 10.6667 4.66666Z"
+                        fill="white"
+                      />
+                    </g>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_503_3720">
+                      <rect width="28" height="20" rx="2" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
+              <input
+                type="text"
+                placeholder="(99) 999-99-99"
+                class="pl-12 pr-4 py-2 h-[60px] w-full border-2 border-gray-200 bg-gray-200 focus:outline-none focus:border-green-700"
+              />
+            </div>
+            <button
+              id="submitBtn"
+              type="submit"
+              class="h-[60px] w-full flex justify-center items-center hover:text-lg mt-4 transition-all text-center text-white bg-mainColor hover:border-4 border-green-700"
+            >
+              Men bilan bog'lanish
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="footer-connect"
+      class="h-auto w-full flex justify-center items-center"
+    >
+      <div
+        class="h-auto w-full md:w-[60%] flex flex-col md:flex-row md:justify-center md:mb-8"
+      >
+        <div class="w-full h-[300px] md:w-[600px] md:h-[500px]">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d187.18737637404044!2d69.33277892379101!3d41.352396718872896!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38aef480fc8dc841%3A0x773e272e48d91b67!2z0KHQutGA0LjQvdC40L3QsyDQptC10L3RgtGAINCi0LDRiNC60LXQvdGCINCy0YDQsNGH!5e0!3m2!1sru!2s!4v1712646527207!5m2!1sru!2s"
+            height="100%"
+            width="100%"
+            style="border: 0"
+            allowfullscreen="true"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div class="w-full md:w-auto flex justify-center items-center">
+          <div
+            class="w-[300px] h-[200px] md:h-[300px] bg-mainColor text-white font-semibold relative md:-left-[50px] md:top-0 -top-12 md:flex md:items-center"
+          >
+            <div class="ml-12 mt-6">
+              <a href="tel:+998974628088">+998 97 462-80-88</a>
+              <h3 class="mb-4 w-[200px] mt-4">
+                Respublika Ona va Bola Skrining Markazi
+              </h3>
+              <p class="mb-2 md:mb-0">Ish vaqti:</p>
+              <h3 class="mb-4">Dush-San: 08.00-14.30</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hidden md:flex h-full items-center">
+        <form
+          onsubmit="event.preventDefault(); submitForm();"
+          method="post"
+          class="h-full w-full flex flex-col justify-between"
+        >
+          <input
+            type="text"
+            placeholder="Ismingiz"
+            class="h-[60px] w-full pl-8 pr-4 py-2 border-2 mb-4 bg-gray-200 border-gray-200 focus:border-green-700 focus:outline-none"
+          />
+          <div class="relative flex items-center w-full">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+            >
+              <!-- class="w-5 h-5" -->
+
+              <svg
+                width="20px"
+                height="20px"
+                viewBox="0 -4 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_503_3720)">
+                  <rect
+                    x="0.25"
+                    y="0.25"
+                    width="27.5"
+                    height="19.5"
+                    rx="1.75"
+                    fill="white"
+                    stroke="#F5F5F5"
+                    stroke-width="0.5"
+                  />
+                  <mask
+                    id="mask0_503_3720"
+                    style="mask-type: alpha"
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="28"
+                    height="20"
+                  >
+                    <rect
+                      x="0.25"
+                      y="0.25"
+                      width="27.5"
+                      height="19.5"
+                      rx="1.75"
+                      fill="white"
+                      stroke="white"
+                      stroke-width="0.5"
+                    />
+                  </mask>
+                  <g mask="url(#mask0_503_3720)">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0 6.66667H28V0H0V6.66667Z"
+                      fill="#04AAC8"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0 20H28V13.3333H0V20Z"
+                      fill="#23C840"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M4.66669 5.33333C5.07797 5.33333 5.46025 5.20919 5.77811 4.99633C5.74128 4.99876 5.70413 4.99999 5.66669 4.99999C4.74621 4.99999 4.00002 4.2538 4.00002 3.33333C4.00002 2.41285 4.74621 1.66666 5.66669 1.66666C5.70413 1.66666 5.74128 1.6679 5.77811 1.67033C5.46025 1.45747 5.07797 1.33333 4.66669 1.33333C3.56212 1.33333 2.66669 2.22876 2.66669 3.33333C2.66669 4.4379 3.56212 5.33333 4.66669 5.33333ZM8.00002 4.66666C8.00002 5.03485 7.70154 5.33333 7.33335 5.33333C6.96516 5.33333 6.66669 5.03485 6.66669 4.66666C6.66669 4.29847 6.96516 3.99999 7.33335 3.99999C7.70154 3.99999 8.00002 4.29847 8.00002 4.66666ZM10 2.66666C10.3682 2.66666 10.6667 2.36818 10.6667 1.99999C10.6667 1.63181 10.3682 1.33333 10 1.33333C9.63183 1.33333 9.33335 1.63181 9.33335 1.99999C9.33335 2.36818 9.63183 2.66666 10 2.66666ZM13.3334 1.99999C13.3334 2.36818 13.0349 2.66666 12.6667 2.66666C12.2985 2.66666 12 2.36818 12 1.99999C12 1.63181 12.2985 1.33333 12.6667 1.33333C13.0349 1.33333 13.3334 1.63181 13.3334 1.99999ZM12.6667 5.33333C13.0349 5.33333 13.3334 5.03485 13.3334 4.66666C13.3334 4.29847 13.0349 3.99999 12.6667 3.99999C12.2985 3.99999 12 4.29847 12 4.66666C12 5.03485 12.2985 5.33333 12.6667 5.33333ZM10.6667 4.66666C10.6667 5.03485 10.3682 5.33333 10 5.33333C9.63183 5.33333 9.33335 5.03485 9.33335 4.66666C9.33335 4.29847 9.63183 3.99999 10 3.99999C10.3682 3.99999 10.6667 4.29847 10.6667 4.66666Z"
+                      fill="white"
+                    />
+                  </g>
+                </g>
+                <defs>
+                  <clipPath id="clip0_503_3720">
+                    <rect width="28" height="20" rx="2" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <input
+              type="text"
+              placeholder="(99) 999-99-99"
+              class="pl-12 pr-4 py-2 h-[60px] w-full border-2 border-gray-200 bg-gray-200 focus:outline-none focus:border-green-700"
+            />
+          </div>
+          <button
+            id="submitBtn"
+            type="submit"
+            class="h-[60px] w-full flex justify-center items-center hover:text-lg mt-4 transition-all text-center text-white bg-mainColor hover:border-4 border-green-700"
+          >
+            Men bilan bog'lanish
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <footer
+      class="w-full h-auto md:h-[120px] flex justify-center items-center bg-mainColor"
+    >
+      <div
+        class="w-[90%] md:w-[60%] h-auto flex flex-col md:flex-row md:items-center"
+      >
+        <div class="h-auto w-full flex justify-center mt-4">
+          <img src="./images/logo-white.png" class="h-[50px]" alt="" />
+        </div>
+        <div class="h-auto w-full flex justify-center mt-4">
+          <div
+            class="w-1/2 h-auto text-lg flex justify-between font-semibold text-white"
+          >
+            <h3 class=""><a href="" class="">tg</a></h3>
+            <h3 class=""><a href="" class="">inst</a></h3>
+            <h3 class=""><a href="" class="">fb</a></h3>
+          </div>
+        </div>
+        <div
+          class="w-full text-center h-auto mt-4 text-white text-lg font-semibold mb-2 md:text-end"
+        >
+          <h3>
+            <a href="milto:odil.sonography238@mail.ru"
+              >odil.sonography238@mail.ru</a
+            >
+          </h3>
+          <p>Maxfiylik siyosati</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
