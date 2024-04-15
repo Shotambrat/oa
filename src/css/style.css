@@ -5,3 +5,7 @@
 .grabbing {
     cursor: grabbing;
 }
+
+* {
+    font-family: Arial, sans-serif;
+}

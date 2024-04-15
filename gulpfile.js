@@ -6,11 +6,11 @@ const cssnano = require('cssnano');
 const terser = require('gulp-terser');
 const sourcemaps = require('gulp-sourcemaps');
 
-
 function htmlTask() {
-    return gulp.src('./src/**/*.html') // Измените путь, если ваша структура отличается
+    return gulp.src('./src/**/*.html')
         .pipe(gulp.dest('./dist'));
 }
+
 // CSS task
 function cssTask() {
     return gulp.src('./src/css/**/*.css')
@@ -30,7 +30,7 @@ function jsTask() {
 }
 
 // Image task
-async function imageTask() {
+function imageTask() {
     return gulp.src('./src/images/**/*')
         .pipe(gulp.dest('./dist/images'));
 }

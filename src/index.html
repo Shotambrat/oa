@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/dist/css/input.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <style>
       .card {
         display: none; /* Скрыть все карточки по умолчанию */
@@ -12,6 +12,45 @@
       .card.active {
         display: block; /* Показать только активную карточку */
         opacity: 1;
+      }
+
+      .gallery-container {
+        margin-bottom: 60px;
+        margin-top: 20px;
+        display: grid;
+        grid: 
+        "first-item-grid second-item-grid" 1fr
+        "third-item-grid third-item-grid" 1fr
+        "third-item-grid third-item-grid" 1fr;
+        grid-gap: 20px;
+        width: 80%;
+        background-color: white;
+      }
+
+      .third-item-grid {grid-area: third-item-grid;}
+      .first-item-grid {grid-area: first-item-grid;}
+      .second-item-grid {grid-area: second-item-grid;}
+
+      .gallery-item {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .gallery-item img {
+        width: 100%; /* Или другой размер, в зависимости от желаемого дизайна */
+        height: 100%;
+        object-fit: cover; /* Или contain, в зависимости от того, как ты хочешь отображать изображения */
+      }
+
+      /* Медиазапросы для больших экранов */
+      @media (min-width: 768px) {
+        .gallery-container {
+          width: 100%;
+          grid: 
+        "first-item-grid second-item-grid third-item-grid" 1fr
+        }
       }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
@@ -152,7 +191,10 @@
         </form>
       </div>
     </div>
-    <section id="main" class="md:h-screen w-full h-auto flex justify-center">
+    <section
+      id="main"
+      class="md:h-screen w-full h-auto flex justify-center md:bg-mainTheme"
+    >
       <div id="container-for-main" class="w-full h-full md:w-[80%]">
         <header
           class="flex h-[100px] w-full justify-between items-center md:justify-start"
@@ -331,9 +373,9 @@
 
     <section
       id="innova"
-      class="bg-white h-auto w-full md:h-screen flex justify-center"
+      class="bg-white h-auto w-full md:h-auto auto flex justify-center"
     >
-      <div class="h-full w-full md:w-[80%] flex flex-col">
+      <div class="h-full w-full md:w-[80%] flex flex-col items-center">
         <div class="w-full flex justify-center items-center text-center">
           <h2 class="text-2xl md:text-5xl font-semibold mt-8">Ixtisoslashuv</h2>
         </div>
@@ -343,7 +385,7 @@
           <div class="flex items-center">
             <img
               src="./images/frame-circle.png"
-              class="ml-2 w-auto h-auto md:h-[70px]"
+              class="ml-2 w-auto h-[30px]"
               alt="innova-icon"
             />
             <p class="ml-2 md:text-xl text-xs">
@@ -398,37 +440,15 @@
             <p class="ml-2 md:text-xl text-xs">Homila neyrosonografiyasi</p>
           </div>
         </div>
-        <div
-          class="h-[400px] w-full md:h-full flex flex-col md:flex-row justify-center items-center bg-white"
-        >
-          <div
-            class="md:w-2/3 w-full h-[100%] flex justify-between items-center"
-          >
-            <div class="w-[85%] md:h-[65%] h-[85%] mx-2">
-              <img
-                class="w-full h-full bg-cover"
-                src="./images/image1.png"
-                alt=""
-              />
-            </div>
-            <div class="w-[85%] md:h-[65%] h-[85%] mx-2">
-              <img
-                class="w-full h-full bg-contain"
-                src="./images/image2.png"
-                alt=""
-              />
-            </div>
+        <div class="gallery-container">
+          <div class="gallery-item first-item-grid">
+            <img src="./images/image1.png" alt="Описание изображения 1" />
           </div>
-          <div class="md:w-1/3 w-full h-[200%] md:h-full">
-            <div
-              class="w-[95%] md:w-full md:h-full mx-auto md:mx-2 md:flex md:items-center"
-            >
-              <img
-                class="w-full md:h-[65%] h-[85%] cover"
-                src="./images/image3.png"
-                alt=""
-              />
-            </div>
+          <div class="gallery-item sec-item-grid">
+            <img src="./images/image2.png" alt="Описание изображения 2" />
+          </div>
+          <div class="gallery-item third-item-grid">
+            <img src="./images/image3.png" alt="Описание изображения 3" />
           </div>
         </div>
       </div>
@@ -436,7 +456,7 @@
 
     <section
       id="services"
-      class="h-auto w-full flex justify-center items-center"
+      class="h-auto w-full flex justify-center items-center bg-mainTheme"
     >
       <div class="flex md:w-[80%] w-full flex-col items-center justify-between">
         <h1 class="my-8 text-3xl font-semibold">Xizmatlar</h1>
@@ -626,16 +646,20 @@
       </div>
     </section>
 
-    <section id="articles" class="w-full h-[500px] bg-gray-300">
-      <h2 class="text-center mb-8 text-xl font-semibold">Yangi maqolalar</h2>
-      <div class="swiper mySwiper md:w-[1100px] w-[300px] h-[330px]">
+    <section id="articles" class="w-full h-[500px] bg-mainTheme">
+      <h2 class="text-center mb-8 text-3xl font-semibold relative top-8">
+        Yangi maqolalar
+      </h2>
+      <div
+        class="swiper mySwiper md:w-[1100px] w-[300px] h-[330px] relative top-12"
+      >
         <div class="swiper-wrapper relative">
           <!-- Slides -->
           <div
             style="display: flex; justify-content: center; height: 100%"
             class="swiper-slide flex justify-center bg-white"
           >
-            <div class="bg-gray-300 border-2 border-gray-300">
+            <div class="bg-mainTheme border-2 border-mainTheme">
               <div class="bg-white flex flex-col justify-around">
                 <h2 class="mt-8 ml-8 text-xl font-semibold">Налоговый вычет</h2>
                 <hr
@@ -657,8 +681,8 @@
             style="display: flex; justify-content: center; height: 100%"
             class="swiper-slide flex justify-center bg-white"
           >
-            <div class="bg-white">
-              <div class="bg-red-300 flex flex-col justify-around">
+            <div class="bg-mainTheme">
+              <div class="bg-white flex flex-col justify-around">
                 <h2 class="mt-8 ml-8 text-xl font-semibold">Налоговый вычет</h2>
                 <hr
                   class="relative md:-left-14 -left-10 border-t-[20px] w-[150px] mt-6 mx-auto"
@@ -679,8 +703,8 @@
             style="display: flex; justify-content: center; height: 100%"
             class="swiper-slide flex justify-center bg-white"
           >
-            <div class="bg-white">
-              <div class="bg-red-300 flex flex-col justify-around">
+            <div class="bg-mainTheme">
+              <div class="bg-white flex flex-col justify-around">
                 <h2 class="mt-8 ml-8 text-xl font-semibold">Налоговый вычет</h2>
                 <hr
                   class="relative md:-left-14 -left-10 border-t-[20px] w-[150px] mt-6 mx-auto"
@@ -711,7 +735,7 @@
       class="h-screen w-full flex justify-center items-center mb-12"
     >
       <div class="w-[320px] h-full md:w-[80%] flex flex-col items-center">
-        <div class="mt-6 mb-8 text-xl md:text-3xl font-semibold">
+        <div class="mt-6 mb-8 text-2xl md:text-3xl font-semibold">
           <h2>Yutuqlar</h2>
         </div>
         <div class="w-full flex items-center justify-center">
@@ -766,28 +790,70 @@
             <div class="swiper-pagination-sec"></div>
           </div>
         </div>
-        <div class="mb-8 md:text-3xl text-xl font-semibold">
-          <h2>Bemorlar sharhlari</h2>
+        <div class="md:mb-8 md:text-3xl text-2xl font-semibold">
+          <h2 class="mt-12 md:mt-0">Bemorlar sharhlari</h2>
         </div>
-        <div class="flex w-full h-screen bg-black text-white items-center justify-center">
-          <div class="relative flex justify-center items-center w-[1000px] h-[300px] overflow-hidden rounded-lg">
-            <div class="absolute top-12 left-24 text-8xl">“</div>
-            <div class="absolute bottom-12 right-24 text-8xl">”</div>
-            <!-- ” -->
-            <div class="card active w-[700px] text-center">Большая благодарность Одилу Алишеровичу, отличные услуги и прекрасный врач, рекомендую!</div>
-            <div class="card w-[700px] text-center">Большая благодарность Одилу Алишеровичу, о</div>
-            <div class="card w-[700px] text-center">Большая благодарность Одилу Алишеровичу, отличные услуги и прекрасный врач, рекомендую! ОВАТОАТ odnf IFUKHDJN KDUBFU KDJF вылаов аов а ваа</div>
-            <div class="card w-[700px] text-center">Большая благодарность Одилу Алишеровичу, отличные услуги и прекрасный врач, рекомендую!</div>
-            <div class="card w-[700px] text-center">Большая благодарность Одилу Алишеровичу, отличные услуги и прекрасный врач, рекомендую! 5</div>
-            <!-- Навигация -->
-            <div class="absolute inset-y-0 left-1 z-10 flex items-center cursor-pointer" onclick="navigateSlider('prev')">
-              <div class="w-8 h-8 bg-dodgerblue text-white rounded-full flex justify-center items-center">&lt;</div>
+        <div class="flex w-full h-screen items-center justify-center">
+          <div
+            class="relative flex justify-center items-center w-[1000px] h-[300px] rounded-lg"
+          >
+            <div
+              class="absolute md:top-12 md:left-24 top-8 left-4 text-8xl"
+              style="font-family: Arial, sans-serif"
+            >
+              “
             </div>
-            <div class="absolute inset-y-0 right-1 z-10 flex items-center cursor-pointer" onclick="navigateSlider('next')">
-              <div class="w-8 h-8 bg-dodgerblue text-white rounded-full flex justify-center items-center">&gt;</div>
+            <div
+              class="absolute md:bottom-12 md:right-24 bottom-0 right-2 text-8xl"
+              style="font-family: Arial, sans-serif"
+            >
+              ”
+            </div>
+            <!-- ” -->
+            <div class="card active w-[300px] md:w-[700px] text-center">
+              Большая благодарность Одилу Алишеровичу, отличные услуги и
+              прекрасный врач, рекомендую!
+            </div>
+            <div class="card w-[300px] md:w-[700px] text-center">
+              Большая благодарность Одилу Алишеровичу, о
+            </div>
+            <div class="card w-[300px] md:w-[700px] text-center">
+              Большая благодарность Одилу Алишеровичу, отличные услуги и
+              прекрасный врач, рекомендую! ОВАТОАТ odnf IFUKHDJN KDUBFU KDJF
+              вылаов аов а ваа
+            </div>
+            <div class="card w-[300px] md:w-[700px] text-center">
+              Большая благодарность Одилу Алишеровичу, отличные услуги и
+              прекрасный врач, рекомендую!
+            </div>
+            <div class="card w-[300px] md:w-[700px] text-center">
+              Большая благодарность Одилу Алишеровичу, отличные услуги и
+              прекрасный врач, рекомендую! 5
+            </div>
+            <!-- Навигация -->
+            <div
+              class="absolute inset-y-0 -left-2 z-10 flex items-center cursor-pointer"
+              onclick="navigateSlider('prev')"
+            >
+              <div
+                class="w-8 h-8 bg-dodgerblue rounded-full flex justify-center items-center"
+              >
+                <img src="./images/prev-button.png" alt="butoon prev" />
+              </div>
+            </div>
+            <div
+              class="absolute inset-y-0 -right-4 flex items-center cursor-pointer z-10"
+              onclick="navigateSlider('next')"
+            >
+              <div
+                class="w-8 h-8 bg-dodgerblue rounded-full flex justify-center items-center"
+              >
+                <img src="./images/next-button.png" alt="button next" />
+              </div>
             </div>
           </div>
         </div>
+      </div>
     </section>
 
     <section
@@ -902,10 +968,10 @@
 
     <section
       id="footer-connect"
-      class="h-auto w-full flex justify-center items-center"
+      class="h-auto w-full flex justify-center items-center bg-mainTheme"
     >
       <div
-        class="h-auto w-full md:w-[60%] flex flex-col md:flex-row md:justify-center md:mb-8"
+        class="h-auto w-full md:w-[60%] flex flex-col md:flex-row md:justify-center md:mb-8 mt-8"
       >
         <div class="w-full h-[300px] md:w-[600px] md:h-[500px]">
           <iframe
